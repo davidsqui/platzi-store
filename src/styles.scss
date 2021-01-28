@@ -1,0 +1,9 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+}
