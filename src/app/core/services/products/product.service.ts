@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Product } from '../../../product.model';
 
 @Injectable({
@@ -6,59 +8,29 @@ import { Product } from '../../../product.model';
 })
 export class ProductService {
 
-  products: Product[] = [
-    {
-      id: '1',
-      image: 'assets/images/camiseta.png',
-      title: 'Camiseta',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '2',
-      image: 'assets/images/hoodie.png',
-      title: 'Hoodie',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '3',
-      image: 'assets/images/mug.png',
-      title: 'Mug',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '4',
-      image: 'assets/images/pin.png',
-      title: 'Pin',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '5',
-      image: 'assets/images/stickers1.png',
-      title: 'Stickers',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '6',
-      image: 'assets/images/stickers2.png',
-      title: 'Stickers',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    }
-  ];
+  url = `${environment.url}/products`;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getProducts() {
-    return this.products;
+    return this.http.get<Product[]>(this.url);
   }
 
   getProduct(id: string) {
-    const product = this.products.find(item => id === item.id);
-    return product ? product : new Product();
+    return this.http.get<Product>(`${this.url}/${id}`);
+  }
+
+  createProduct(product: Product) {
+    return this.http.post(this.url, product);
+  }
+
+  updateProduct(id: string, changes: Partial<Product>) {
+    return this.http.put(`${this.url}/${id}`, changes);
+  }
+
+  deleteProduct(id: string) {
+    return this.http.delete(`${this.url}/${id}`);
   }
 }
