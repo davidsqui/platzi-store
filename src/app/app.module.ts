@@ -19,7 +19,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    LayoutComponent
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
