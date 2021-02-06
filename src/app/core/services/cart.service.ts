@@ -15,10 +15,10 @@ export class CartService {
   constructor() { }
 
   addCart(product: Product) {
-    this.products = this.getProductsLocalStorage();
+    // this.products = this.getProductsLocalStorage();
     this.products = [...this.products, product];
 
-    localStorage.setItem('products', JSON.stringify(this.products));
+    // localStorage.setItem('products', JSON.stringify(this.products));
 
     this.cart.next(this.products);
   }

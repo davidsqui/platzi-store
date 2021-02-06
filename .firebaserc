@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "platzi-store-27fbc": {
+      "hosting": {
+        "platzi-store": [
+          "platzi-store-27fbc"
+        ]
+      }
+    }
+  }
+}

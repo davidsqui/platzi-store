@@ -16,11 +16,12 @@ export class HeaderComponent implements OnInit {
     private cartService: CartService
   ) {
     this.total$ = this.cartService.cart$.pipe(map(products => {
-      if (products.length === 0) {
+      return products.length;
+      /*if (products.length === 0) {
         return this.cartService.getProductsLocalStorage().length;
       } else {
         return products.length;
-      }
+      }*/
     }
     ));
   }
