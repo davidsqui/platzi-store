@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { ProductService } from 'src/app/core/services/products/product.service';
 
 @Component({
@@ -11,12 +14,13 @@ import { ProductService } from 'src/app/core/services/products/product.service';
 export class ProductFormComponent {
 
   form: FormGroup;
-
+  image$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
+    private storageService: AngularFireStorage,
   ) {
     this.buildForm();
   }
@@ -39,6 +43,23 @@ export class ProductFormComponent {
         this.router.navigate(['/admin/products']);
       });
     }
+  }
 
+  uploadFile(event: any) {
+    const file = event.target.files[0];
+    const name = 'image';
+    const fileRef = this.storageService.ref(`images/${name}`);
+    const task = this.storageService.upload(`images/${name}`, file);
+
+    task.snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.image$ = fileRef.getDownloadURL();
+          this.image$.subscribe(url => {
+            this.form.get('image')?.setValue(url);
+            console.log(url);
+          });
+        })
+      ).subscribe();
   }
 }

@@ -32,10 +32,17 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row">
+        <div class="col-xs">
+          <img *ngIf="(image$ | async) as image" [src]="image" alt="">
+          <input type="file" (change)="uploadFile($event)">
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button type="submit">Guardar</button>
     </mat-card-actions>
   </mat-card>
+  <h1>{{ 1 + '1'}}</h1>
 
 </form>
